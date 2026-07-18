@@ -341,10 +341,15 @@ type Agent = (typeof AGENTS)[number];
 const Mono = ({
   children,
   className = "",
+  ...props
 }: {
   children: React.ReactNode;
   className?: string;
-}) => <span className={`font-mono ${className}`}>{children}</span>;
+} & React.HTMLAttributes<HTMLSpanElement>) => (
+  <span className={`font-mono ${className}`} {...props}>
+    {children}
+  </span>
+);
 
 function ProtoAvatar({
   name,
@@ -1417,7 +1422,7 @@ function ProtoLogin({ onLogin }: { onLogin: () => void }) {
                   setErr("");
                 }}
                 className="w-full h-11 border border-gray-200 rounded-xl px-4 font-mono text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all bg-gray-50 focus:bg-white"
-                placeholder="test@gmail.com"
+                placeholder="supervisor@century.com"
               />
             </div>
             <div className="mb-4">
@@ -1433,7 +1438,7 @@ function ProtoLogin({ onLogin }: { onLogin: () => void }) {
                 }}
                 onKeyDown={(e) => e.key === "Enter" && handleLogin()}
                 className="w-full h-11 border border-gray-200 rounded-xl px-4 font-mono text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all bg-gray-50 focus:bg-white"
-                placeholder="12345"
+                placeholder="••••••••"
               />
             </div>
             {err && (
@@ -1441,13 +1446,6 @@ function ProtoLogin({ onLogin }: { onLogin: () => void }) {
                 {err}
               </div>
             )}
-            <div className="mb-5 p-3 bg-blue-50/50 border border-blue-100/50 rounded-xl">
-              <p className="font-mono text-[10px] text-blue-800 leading-normal">
-                🔑 <strong>Acceso Demo:</strong><br />
-                Email: <span className="underline">test@gmail.com</span><br />
-                Clave: <span className="underline">12345</span>
-              </p>
-            </div>
             <div className="flex items-center gap-2 mb-6">
               <input
                 type="checkbox"
@@ -2413,7 +2411,9 @@ function ProtoDashboard({
               >
                 {k.value}
               </p>
-              <p className="font-mono text-[10px] sm:text-xs text-slate-400">{k.sub}</p>
+              <p className="font-mono text-[10px] sm:text-xs text-slate-400">
+                {k.sub}
+              </p>
               <div className="flex items-center gap-1.5 mt-2">
                 <TrendIcon t={k.trend} f={k.flag} />
                 <span className={`font-mono text-xs ${FLAG_TEXT[k.flag]}`}>
